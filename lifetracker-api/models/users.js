@@ -22,8 +22,9 @@ class User {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      location: user.location,
-      date: user.date,
+      created_at: user.created_at,
+      updated_at: user.updated_at,
+      username: user.username
     }
   }
 
@@ -66,11 +67,12 @@ class User {
    **/
 
   static async register(creds) {
-    const { email, password, firstName, lastName, location, date } = creds
-    const requiredCreds = ["email", "password", "firstName", "lastName", "location", "date"]
+    const { email, password, firstName, lastName, username } = creds
+    const requiredCreds = ["email", "password", "firstName", "lastName", "username"]
     try {
       validateFields({ required: requiredCreds, obj: creds, location: "user registration" })
     } catch (err) {
+      console.log("THIS ERROR")
       throw err
     }
 
@@ -88,18 +90,19 @@ class User {
           first_name,
           last_name,
           email,
-          location,
-          date
+          created_at,
+          updated_at,
+          username
         )
-        VALUES ($1, $2, $3, $4, $5, $6)
-        RETURNING id,
-                  email,            
+        VALUES ($1, $2, $3, $4, to_timestamp($5), to_timestamp($6), $7)
+        RETURNING email,            
                   first_name AS "firstName", 
                   last_name AS "lastName",
-                  location,
-                  date
+                  created_at AS "createdAt",
+                  updated_at,
+                  username
                   `,
-      [hashedPassword, firstName, lastName, normalizedEmail, location, date]
+      [hashedPassword, firstName, lastName, normalizedEmail, Date.now()/1000, Date.now()/1000, username]
     )
 
     const user = result.rows[0]
@@ -115,41 +118,9 @@ class User {
    */
   static async fetchUserByEmail(email) {
     const result = await db.query(
-      `SELECT id,
-              email, 
-              password,
-              first_name AS "firstName",
-              last_name AS "lastName",
-              location,
-              date              
-           FROM users
+      `SELECT FROM users
            WHERE email = $1`,
       [email.toLowerCase()]
-    )
-
-    const user = result.rows[0]
-
-    return user
-  }
-
-  /**
-   * Fetch a user in the database by email
-   *
-   * @param {String} userId
-   * @returns user
-   */
-  static async fetchById(userId) {
-    const result = await db.query(
-      `SELECT id,
-              email,    
-              password,
-              first_name AS "firstName",
-              last_name AS "lastName",
-              location,
-              date              
-           FROM users
-           WHERE id = $1`,
-      [userId]
     )
 
     const user = result.rows[0]

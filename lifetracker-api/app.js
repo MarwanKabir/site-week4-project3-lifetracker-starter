@@ -27,7 +27,7 @@ app.use("/auth", authRoutes)
 // health check
 app.get("/", function (req, res) {
   return res.status(200).json({
-    ping: "pong",
+    ping: "pong"
   })
 })
 
