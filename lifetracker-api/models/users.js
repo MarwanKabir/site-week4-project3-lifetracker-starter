@@ -67,10 +67,12 @@ class User {
    **/
 
   static async register(creds) {
-    const { email, password, firstName, lastName, username } = creds
+    const { email, password, firstName, lastName } = creds
+    const username = firstName + lastName
     const requiredCreds = ["email", "password", "firstName", "lastName", "username"]
+    console.log(username)
     try {
-      validateFields({ required: requiredCreds, obj: creds, location: "user registration" })
+      validateFields({ required: requiredCreds, obj: {...creds, username: username}, location: "user registration" })
     } catch (err) {
       console.log("THIS ERROR")
       throw err
