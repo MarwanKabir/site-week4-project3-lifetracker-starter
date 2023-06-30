@@ -1,3 +1,22 @@
-.Navbar {
+.navbar{
+  background-color: #035177;
   padding-top: 20px;
+  padding-bottom: 20px;
+}
+.navbar ul{
+  list-style: none;
+  display: flex;
+  gap: 10rem;
+  margin-left: 21rem;
+  font-size: 20px;
+  font-weight: bold;
+}
+nav a{
+  color: aliceblue;
+  text-decoration: none;
+}
+nav button{
+  color: aliceblue;
+  background-color: #035177;
+  text-decoration: none;
 }

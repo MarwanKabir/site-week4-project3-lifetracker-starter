@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import axios from "axios"
+import "./Register.css"
 
 export default function Signup() {
   const navigate = useNavigate()
@@ -40,7 +41,7 @@ export default function Signup() {
 
       if (res?.data?.user) {
         setIsLoading(false)
-        navigate("/portal")
+        navigate("/login")
       } else {
         setErrors((e) => ({ ...e, form: "Something went wrong with registration" }))
         setIsLoading(false)

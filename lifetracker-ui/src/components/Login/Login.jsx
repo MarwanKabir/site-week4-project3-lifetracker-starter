@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
+import "./Login.css"
 
 export default function Login() {
     const navigate = useNavigate()
@@ -32,7 +33,7 @@ export default function Login() {
         const res = await axios.post(`http://localhost:3001/auth/login`, form)
         if (res?.data) {
           setIsLoading(false)
-          navigate("/portal")
+          navigate("/Activity")
         } else {
           setErrors((e) => ({ ...e, form: "Invalid username/password combination" }))
           setIsLoading(false)
