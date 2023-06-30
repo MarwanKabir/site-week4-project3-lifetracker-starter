@@ -45,11 +45,16 @@ class User {
       throw err
     }
 
+    
     const user = await User.fetchUserByEmail(email)
+    console.log(user)
 
     if (user) {
       // compare hashed password to a new hash from password
+      console.log(password)
+      console.log(user.password)
       const isValid = await bcrypt.compare(password, user.password)
+      console.log("isValid:", isValid)
       if (isValid === true) {
         return User._createPublicUser(user)
       }
@@ -120,10 +125,11 @@ class User {
    */
   static async fetchUserByEmail(email) {
     const result = await db.query(
-      `SELECT FROM users
+      `SELECT * FROM users
            WHERE email = $1`,
       [email.toLowerCase()]
     )
+    console.log(result)
 
     const user = result.rows[0]
 
