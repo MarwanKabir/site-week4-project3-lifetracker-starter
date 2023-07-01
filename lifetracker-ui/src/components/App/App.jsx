@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-// import Home from "../Home/Home"
+import Home from "../Home/Home"
 import Register from "../Register/Register"
 import Login from "../Login/Login"
 // import Portal from "../Portal/Portal"
@@ -16,6 +16,7 @@ export default function App() {
       <Navbar />
         <Routes>
           {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/" element={<Home setAppState={setAppState} />} />
           <Route path="/register" element={<Register setAppState={setAppState} />} />
           <Route path="/login" element={<Login setAppState={setAppState} />} />
           {/* <Route

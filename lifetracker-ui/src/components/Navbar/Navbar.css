@@ -4,6 +4,7 @@
   align-items: center;
   background: linear-gradient(to right, #b3d9ff, #003d66);
   padding: 10px;
+  width: 100%;
 }
 
 .logo {
