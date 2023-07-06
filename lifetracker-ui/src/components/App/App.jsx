@@ -7,6 +7,7 @@ import Login from "../Login/Login"
 // import Portal from "../Portal/Portal"
 import "./App.css"
 import Navbar from "../Navbar/Navbar"
+import Workouts from "../ExercisePage/ExercisePage"
 
 export default function App() {
   const [appState, setAppState] = useState({})
@@ -43,6 +44,7 @@ export default function App() {
           <Route path="/" element={<Home setAppState={setAppState} />} />
           <Route path="/register" element={<Register setAppState={setAppState} />} />
           <Route path="/login" element={<Login setAppState={setAppState} setLoggedIn={setLoggedIn} setUserName={setUserName} />} />
+          <Route path="/exercise" element={<Workouts setAppState={setAppState}/>}/>
           {/* <Route
             path="/portal"
             element={<Portal setAppState={setAppState} appState={appState} user={appState?.user} />}
