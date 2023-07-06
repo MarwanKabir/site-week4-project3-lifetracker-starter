@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
-export default function Navbar() {
+export default function Navbar({handleLogout, loggedIn}) {
   const location = useLocation();
 
   return (
@@ -28,16 +28,23 @@ export default function Navbar() {
       {location.pathname.indexOf("portal") === -1 ? (
         <ul>
         <div className="auth-buttons">
-          <li>
-            <Link to="/login">
+          {loggedIn ? 
+            <>
+              <button onClick={handleLogout}>Logout</button>
+            </>
+          :
+            <>
+            <li>
+              <Link to="/login">
               <button className="btn ghost">Login</button>
-            </Link>
-          </li>
-          <li>
-            <Link to="/register">
+              </Link>
+            </li>
+            <li>
+              <Link to="/register">
               <button className="btn primary">Register</button>
-            </Link>
-          </li>
+              </Link>
+            </li>
+            </>}
         </div>
       </ul>
       
