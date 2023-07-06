@@ -9,7 +9,8 @@ const router = express.Router()
 router.post("/login", async function (req, res, next) {
   try {
     const user = await User.authenticate(req.body)
-    return res.status(200).json({ user })
+    const token = User.generateAuthToken(user)
+    return res.status(200).json({ user, token })
   } catch (err) {
     next(err)
   }

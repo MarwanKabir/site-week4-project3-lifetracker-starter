@@ -4,6 +4,9 @@ const db = require("../db")
 const bcrypt = require("bcrypt")
 const { BadRequestError, UnauthorizedError } = require("../utils/errors")
 const { validateFields } = require("../utils/validate")
+const jwt = require("jsonwebtoken")
+const crypto = require("crypto")
+const secretKey = crypto.randomBytes(64).toString("hex")
 
 const { BCRYPT_WORK_FACTOR } = require("../config")
 
@@ -35,7 +38,26 @@ class User {
    *
    * @returns user
    **/
+  static generateAuthToken (user){
+    const payload = {
+      id: user.id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      emailaddress: user.emailaddress
+    }
+    
 
+    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' })
+    return token
+  }
+  static verifyAuthToken(token){
+    try {
+        const decoded = jwt.verify(token, secretKey)
+        return decoded
+    } catch (err) {
+        return null
+    }
+  }
   static async authenticate(creds) {
     const { email, password } = creds
     const requiredCreds = ["email", "password"]
