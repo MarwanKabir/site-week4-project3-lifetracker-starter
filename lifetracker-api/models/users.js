@@ -6,7 +6,7 @@ const { BadRequestError, UnauthorizedError } = require("../utils/errors")
 const { validateFields } = require("../utils/validate")
 const jwt = require("jsonwebtoken")
 const crypto = require("crypto")
-const secretKey = crypto.randomBytes(64).toString("hex")
+const secretKey = "Thierferferfreferf"
 
 const { BCRYPT_WORK_FACTOR } = require("../config")
 
@@ -22,8 +22,8 @@ class User {
   static _createPublicUser(user) {
     return {
       id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      firstName: user.first_name,
+      lastName: user.last_name,
       email: user.email,
       created_at: user.created_at,
       updated_at: user.updated_at,
@@ -39,11 +39,12 @@ class User {
    * @returns user
    **/
   static generateAuthToken (user){
+    console.log("THIS IS THE USER", user)
     const payload = {
       id: user.id,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      emailaddress: user.emailaddress
+      firstname: user.firstName,
+      lastname: user.lastName,
+      email: user.email
     }
     
 
@@ -52,9 +53,14 @@ class User {
   }
   static verifyAuthToken(token){
     try {
-        const decoded = jwt.verify(token, secretKey)
-        return decoded
+        const verify = jwt.verify(token, secretKey)
+        console.log("This is verify", verify)
+        if(verify){
+          return jwt.decode(token)
+        }
+        return null
     } catch (err) {
+      console.log(err)
         return null
     }
   }
@@ -149,13 +155,44 @@ class User {
     const result = await db.query(
       `SELECT * FROM users
            WHERE email = $1`,
-      [email.toLowerCase()]
+      [email?.toLowerCase()]
     )
-    console.log(result)
-
+    console.log("This is the result", result)
     const user = result.rows[0]
 
     return user
+  }
+  static async addWorkout(info) {
+    const { name, category, duration, intensity, token} = info
+    const email = User.verifyAuthToken(token).email
+    console.log("THIS IS THE USERDATA", email)
+    const user = await User.fetchUserByEmail(email)
+    console.log(user)
+
+    try {
+      // Inserting the workout data into the workouts table
+      const result = await db.query(
+        `INSERT INTO workouts (name, category, duration, intensity, user_id)
+         VALUES ($1, $2, $3, $4, $5)
+         RETURNING *`,
+        [name, category, duration, intensity, user.id]
+      )
+
+      // Retrieve the inserted workout from the result
+      const workout = result.rows
+
+      const filteredResult = await db.query(
+        `SELECT * FROM workouts WHERE user_id = $1`,
+        [user.id]
+      )
+
+      const filteredWorkout = filteredResult.rows
+
+      return filteredWorkout
+
+    } catch (err) {
+      throw err
+    }
   }
 }
 
