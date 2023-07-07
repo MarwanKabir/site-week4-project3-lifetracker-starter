@@ -165,9 +165,7 @@ class User {
   static async addWorkout(info) {
     const { name, category, duration, intensity, token} = info
     const email = User.verifyAuthToken(token).email
-    console.log("THIS IS THE USERDATA", email)
     const user = await User.fetchUserByEmail(email)
-    console.log(user)
 
     try {
       // Inserting the workout data into the workouts table
@@ -193,6 +191,16 @@ class User {
     } catch (err) {
       throw err
     }
+  }
+  static async getAllWorkouts(token){
+    const email = User.verifyAuthToken(token).email
+    console.log("THIS IS THE EMAIL",email)
+    const user = await User.fetchUserByEmail(email)
+    const filteredResult = await db.query(
+      `SELECT * FROM workouts WHERE user_id = $1`,
+      [user.id]
+    )
+    return filteredResult.rows
   }
 }
 

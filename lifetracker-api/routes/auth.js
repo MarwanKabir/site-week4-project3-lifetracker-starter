@@ -35,4 +35,13 @@ router.post("/exercise", async function (req, res, next) {
   }
 })
 
+router.post("/GetExercise", async function (req, res, next) {
+  try {
+    const workout = await User.getAllWorkouts(req.body.token)
+    return res.status(200).json({ message: "Exercise saved successfully", workout:workout});
+  } catch (err) {
+    next(err);
+  }
+})
+
 module.exports = router
