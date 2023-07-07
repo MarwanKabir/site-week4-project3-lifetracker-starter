@@ -172,10 +172,10 @@ class User {
     try {
       // Inserting the workout data into the workouts table
       const result = await db.query(
-        `INSERT INTO workouts (name, category, duration, intensity, user_id)
-         VALUES ($1, $2, $3, $4, $5)
+        `INSERT INTO workouts (name, category, duration, intensity, worktime, user_id)
+         VALUES ($1, $2, $3, $4, to_timestamp($5), $6)
          RETURNING *`,
-        [name, category, duration, intensity, user.id]
+        [name, category, duration, intensity, Date.now()/1000, user.id]
       )
 
       // Retrieve the inserted workout from the result

@@ -15,6 +15,8 @@ CREATE TABLE workouts (
     category VARCHAR(200) NOT NULL,
     duration VARCHAR(200) NOT NULL,
     intensity VARCHAR(200) NOT NULL,
+    worktime VARCHAR(200) NOT NULL,
     user_id INT,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
