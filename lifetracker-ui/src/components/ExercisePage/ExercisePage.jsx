@@ -7,12 +7,18 @@ export default function Workouts({loggedIn}) {
       duration: '',
       intensity: '',
     });
+
+    const[workouts, setWorkouts] = useState([])
   
     const handleSave = async () => {
         try {
             const token = localStorage.getItem("token")
           const response = await axios.post("http://localhost:3001/auth/exercise", {...exerciseData, token:token})
           console.log("Exercise saved successfully:", response.data)
+
+          const newWorkout = response.data.workout
+          setWorkouts(newWorkout)
+
         } catch (error) {
           console.log("Error saving exercise:", error)
         }
@@ -74,6 +80,23 @@ export default function Workouts({loggedIn}) {
               Save
             </button>
           </form>
+        </section>
+        <section>
+            <h2>My Workouts</h2>
+            {workouts.map((workout) => {
+                const worktime = new Date(workout.worktime)
+                const formattedDateTime = `${worktime.toLocaleDateString()} ${worktime.toLocaleTimeString()}`
+                return (
+                    <div>
+                        <h3>{workout?.name}</h3>
+                        <p>{formattedDateTime}</p>
+                        <p>Category: {workout?.category}</p>
+                        <p>Duration: {workout?.duration}</p>
+                        <p>Intensity: {workout?.intensity}</p>
+                    </div>
+                ) 
+            }
+            )}
         </section>
         </>
         :
