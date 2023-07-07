@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 export default function Workouts({loggedIn}) {
     const [exerciseData, setExerciseData] = useState({
       name: '',
@@ -23,6 +23,25 @@ export default function Workouts({loggedIn}) {
           console.log("Error saving exercise:", error)
         }
       }
+    const newPost = async () => {
+        try{
+            const token = localStorage.getItem("token")
+            const response = await axios.post("http://localhost:3001/auth/GetExercise", {token:token})
+            const newWorkout = response?.data?.workout
+            setWorkouts(newWorkout)
+
+        }catch(error){
+            throw error
+        }
+    }
+
+    useEffect(() => {
+        async function dataSave(){
+            await newPost()
+        }
+        dataSave()
+    },[loggedIn])
+
   
     return (
       <div>
