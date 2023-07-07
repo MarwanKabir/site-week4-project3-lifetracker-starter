@@ -75,7 +75,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--deep-blue);
+    /* background: var(--deep-blue); */
     cursor: pointer;
     margin-top: 15px;
     border-style: dotted;

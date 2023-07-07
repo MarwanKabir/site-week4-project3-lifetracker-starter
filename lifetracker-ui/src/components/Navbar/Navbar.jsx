@@ -13,16 +13,16 @@ export default function Navbar({handleLogout, loggedIn}) {
       </div>
       <ul>
         <li>
-          <Link to="/activity">Activity</Link>
+          <Link to={"/activity"}>Activity</Link>
         </li>
         <li>
-          <Link to="/exercise">Exercise</Link>
+          <Link to={"/exercise"}>Exercise</Link>
         </li>
         <li>
-          <Link to="/nutrition">Nutrition</Link>
+          <Link to={"/nutrition"}>Nutrition</Link>
         </li>
         <li>
-          <Link to="/sleep">Sleep</Link>
+          <Link to={"/sleep"}>Sleep</Link>
         </li>
       </ul>
       {location.pathname.indexOf("portal") === -1 ? (

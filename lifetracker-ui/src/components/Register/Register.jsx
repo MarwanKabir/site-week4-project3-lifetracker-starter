@@ -10,6 +10,7 @@ export default function Signup() {
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
+    username: "",
     email: "",
     date: "",
     password: ""
@@ -84,6 +85,16 @@ export default function Signup() {
                 onChange={handleOnInputChange}
               />
               {errors.lastName && <span className="error">{errors.lastName}</span>}
+            </div>
+            <div className="input-field">
+              <label htmlFor="username">UserName</label>
+              <input
+                type="text"
+                name="userName"
+                placeholder="Username"
+                value={form.username}
+                onChange={handleOnInputChange}
+              />
             </div>
           </div>
 

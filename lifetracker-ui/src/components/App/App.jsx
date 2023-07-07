@@ -8,6 +8,8 @@ import Login from "../Login/Login"
 import "./App.css"
 import Navbar from "../Navbar/Navbar"
 import Workouts from "../ExercisePage/ExercisePage"
+import Activity from "../ActivityPage/Activity"
+import Nutrition from "../NutritionPage/Nutrition"
 
 export default function App() {
   const [appState, setAppState] = useState({})
@@ -45,6 +47,9 @@ export default function App() {
           <Route path="/register" element={<Register setAppState={setAppState} />} />
           <Route path="/login" element={<Login setAppState={setAppState} setLoggedIn={setLoggedIn} setUserName={setUserName} />} />
           <Route path="/exercise" element={<Workouts setAppState={setAppState} loggedIn={loggedIn}/>}/>
+          <Route path="/Activity" element={<Activity setAppState={setAppState} loggedIn={loggedIn}/>}/>
+          <Route path="/nutrition" element={<Nutrition setAppState={setAppState} loggedIn={loggedIn}/>}/>
+          <Route path="/sleep" element={<Nutrition setAppState={setAppState} loggedIn={loggedIn}/>}/>
           {/* <Route
             path="/portal"
             element={<Portal setAppState={setAppState} appState={appState} user={appState?.user} />}

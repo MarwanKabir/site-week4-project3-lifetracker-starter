@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import "./ExercisePage.css"
 export default function Workouts({loggedIn}) {
     const [exerciseData, setExerciseData] = useState({
       name: '',
@@ -17,11 +18,14 @@ export default function Workouts({loggedIn}) {
           console.log("Exercise saved successfully:", response.data)
 
           const newWorkout = response.data.workout
-          setWorkouts(newWorkout)
+          setWorkouts(newWorkout.reverse())
 
         } catch (error) {
           console.log("Error saving exercise:", error)
         }
+        setExerciseData(
+            {name: "", category: "", duration: "", intensity: ""}
+        )
       }
     const newPost = async () => {
         try{
@@ -44,14 +48,14 @@ export default function Workouts({loggedIn}) {
 
   
     return (
-      <div>
+      <div className="big-container">
         {loggedIn ?
         <>
-        <section>
+        <section className="first-section">
           <h2>Exercise</h2>
           <form>
-            <h3>Record Exercise</h3>
-            <label>
+            <h3 className="header">Record Exercise</h3>
+            <label className="labels">
               Name:
               <input
                 type="text"
@@ -65,7 +69,7 @@ export default function Workouts({loggedIn}) {
               />
             </label>
             <br />
-            <label>
+            <label className="labels">
               Category:
               <select
                 value={exerciseData.category}
@@ -85,30 +89,31 @@ export default function Workouts({loggedIn}) {
               </select>
             </label>
             <br />
-            <label>
+            <label className="labels">
               Duration (min):
               <input type="text" value={exerciseData.duration} onInput={(event) => setExerciseData({ ...exerciseData, duration: event.target.value})}/>
             </label>
             <br />
-            <label>
+            <label className="labels">
               Intensity:
               <input type="text" value={exerciseData.intensity} onInput={(event) => setExerciseData({...exerciseData,intensity: event.target.value})}/>
             </label>
             <br />
-            <button type="button" onClick={handleSave}>
+            <button classname = "savebutton" type="button" onClick={handleSave}>
               Save
             </button>
           </form>
         </section>
-        <section>
+        <section className="second-section">
             <h2>My Workouts</h2>
             {workouts.map((workout) => {
                 const worktime = new Date(workout.worktime)
                 const formattedDateTime = `${worktime.toLocaleDateString()} ${worktime.toLocaleTimeString()}`
                 return (
-                    <div>
+                    <div className="tags">
                         <h3>{workout?.name}</h3>
                         <p>{formattedDateTime}</p>
+                        <p>Workout ID: {workout?.id}</p>
                         <p>Category: {workout?.category}</p>
                         <p>Duration: {workout?.duration}</p>
                         <p>Intensity: {workout?.intensity}</p>
