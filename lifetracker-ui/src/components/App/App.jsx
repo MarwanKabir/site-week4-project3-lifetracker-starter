@@ -44,7 +44,7 @@ export default function App() {
           <Route path="/" element={<Home setAppState={setAppState} />} />
           <Route path="/register" element={<Register setAppState={setAppState} />} />
           <Route path="/login" element={<Login setAppState={setAppState} setLoggedIn={setLoggedIn} setUserName={setUserName} />} />
-          <Route path="/exercise" element={<Workouts setAppState={setAppState}/>}/>
+          <Route path="/exercise" element={<Workouts setAppState={setAppState} loggedIn={loggedIn}/>}/>
           {/* <Route
             path="/portal"
             element={<Portal setAppState={setAppState} appState={appState} user={appState?.user} />}

@@ -1,5 +1,6 @@
+import axios from "axios"
 import { useState } from "react"
-export default function Workouts() {
+export default function Workouts({loggedIn}) {
     const [exerciseData, setExerciseData] = useState({
       name: '',
       category: '',
@@ -7,12 +8,20 @@ export default function Workouts() {
       intensity: '',
     });
   
-    const handleSave = () => {
-      console.log('Exercise saved:', exerciseData);
-    };
+    const handleSave = async () => {
+        try {
+            const token = localStorage.getItem("token")
+          const response = await axios.post("http://localhost:3001/auth/exercise", {...exerciseData, token:token})
+          console.log("Exercise saved successfully:", response.data)
+        } catch (error) {
+          console.log("Error saving exercise:", error)
+        }
+      }
   
     return (
       <div>
+        {loggedIn ?
+        <>
         <section>
           <h2>Exercise</h2>
           <form>
@@ -66,6 +75,9 @@ export default function Workouts() {
             </button>
           </form>
         </section>
+        </>
+        :
+        <h1>LOG IN TO VIEW</h1>}
       </div>
     )
   }
