@@ -14,7 +14,7 @@ export default function Workouts({loggedIn}) {
     const handleSave = async () => {
         try {
             const token = localStorage.getItem("token")
-          const response = await axios.post("http://localhost:3001/auth/exercise", {...exerciseData, token:token})
+          const response = await axios.post("https://lifetracker-8i8l.onrender.com/auth/exercise", {...exerciseData, token:token})
           console.log("Exercise saved successfully:", response.data)
 
           const newWorkout = response.data.workout
@@ -30,7 +30,7 @@ export default function Workouts({loggedIn}) {
     const newPost = async () => {
         try{
             const token = localStorage.getItem("token")
-            const response = await axios.post("http://localhost:3001/auth/GetExercise", {token:token})
+            const response = await axios.post("https://lifetracker-8i8l.onrender.com/auth/GetExercise", {token:token})
             const newWorkout = response?.data?.workout
             setWorkouts(newWorkout)
 

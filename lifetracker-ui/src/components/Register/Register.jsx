@@ -33,7 +33,7 @@ export default function Signup() {
     setErrors((e) => ({ ...e, form: null }))
 
     try {
-      const res = await axios.post("http://localhost:3001/auth/register", {
+      const res = await axios.post("https://lifetracker-8i8l.onrender.com/auth/register", {
         firstName: form.firstName,
         lastName: form.lastName,
         email: form.email,

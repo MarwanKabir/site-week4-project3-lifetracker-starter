@@ -31,7 +31,7 @@ export default function Login({setLoggedIn, setUserName}) {
       setErrors((e) => ({ ...e, form: null }))
   
       try {
-        const res = await axios.post(`http://localhost:3001/auth/login`, form)
+        const res = await axios.post(`https://lifetracker-8i8l.onrender.com/auth/login`, form)
         if (res?.data) {
 
           const{token} = res.data
