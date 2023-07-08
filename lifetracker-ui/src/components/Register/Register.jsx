@@ -90,8 +90,8 @@ export default function Signup() {
               <label htmlFor="username">UserName</label>
               <input
                 type="text"
-                name="userName"
-                placeholder="Username"
+                name="username"
+                placeholder="username"
                 value={form.username}
                 onChange={handleOnInputChange}
               />
